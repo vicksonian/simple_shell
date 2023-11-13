@@ -12,18 +12,14 @@
 #include <fcntl.h>
 #include <errno.h>
 
+#define buffer_size 1024
+
+
 /* Function Prototypes */
-void shell_loop(void);
-char *read_line(void);
-char **split_line(char *line);
-int execute(char **args);
-char *_getenv(const char *name);
-char *find_path(char *command, char **env);
-int launch(char **args, char **env);
-void exit_shell(char **args);
-void print_env(char **env);
-void env_shell(char **args, char **env);
-char *own_getline(void);
-void free_tokens(char **tokens);
+void display_prompt(void);
+char *read_input(void);
+void execute_command(char *command);
+
+
 
 #endif /* SHELL_H */
