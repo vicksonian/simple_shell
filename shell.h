@@ -13,6 +13,7 @@
 #include <errno.h>
 
 #define buffer_size 1024
+#define MAX_PATH 1024
 
 
 /* Function Prototypes */
