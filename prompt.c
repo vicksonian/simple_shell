@@ -1,15 +1,13 @@
 #include "shell.h"
 
 /**
-* Read a line from the standard input.
-*
-* This function reads a line of input from the standard input (stdin) and
-* returns it as a dynamically allocated string. The caller is responsible
-* for freeing the memory allocated for the returned string.
-*
-* @return A dynamically allocated string containing the input line.
-*         It is the caller's responsibility to free the memory.
-*/
+ * read_line - Reads a line of input from the standard input.
+ *
+ * Return:
+ * Returns a dynamically allocated string containing the input line.
+ * Exits the program with success if the end of file (EOF) is reached.
+ * Exits the program with failure if an error occurs during reading.
+ */
 
 char *read_line(void)
 {
