@@ -1,6 +1,5 @@
 #include "shell.h"
 #include <string.h>
-
 /**
  * split_line - Tokenizes a string into an array of strings.
  * @line: The input string to be tokenized.
