@@ -1,7 +1,6 @@
 #ifndef _SHELL_H_
 #define _SHELL_H_
 
-#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -16,14 +15,14 @@
 #define buffer_size 1024
 #define MAX_PATH 1024
 
-
 /* Function Prototypes */
 void display_prompt(void);
 char *read_input(void);
-void execute_command(char **command);
+void execute_command(char *command);
 char *search_path(char *command);
 char **tokenize_input(char *input);
-
-
+void exit_shell(void);
+void print_env(void);
 
 #endif /* SHELL_H */
+
