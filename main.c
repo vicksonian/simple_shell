@@ -1,29 +1,17 @@
 #include "shell.h"
 
-/**
- * main - Simple shell program
- * Return: 0 on success
- */
 int main(void)
 {
-	char *input;
+char *input;
 
-	while (1)
+while (1)
 {
-	display_prompt();
-	input = read_input();
+display_prompt();
+char *input = read_input();
+execute_command(tokenize_input(input));
+free(input);
+}
 
-	if (input == NULL)
-		{
-		printf("\n");
-		break; /* Exit on EOF (Ctrl+D) */
-		}
-
-	execute_command(input);
-
-	free(input);
-	}
-
-	return (0);
+return 0;
 }
 
