@@ -1,10 +1,11 @@
 #include "shell.h"
 
 /**
- * execute_command - Execute the entered command
- * @command: The command to execute
- */
-void execute_command(char **command);
+* execute_command - Execute the entered command
+* @args: The command and its arguments
+*/
+ 
+void execute_command(char **args)
 {
 char *path = search_path(args[0]);
 pid_t child_pid;
@@ -38,4 +39,3 @@ waitpid(child_pid, &status, 0);
 
 free(path);
 }
-

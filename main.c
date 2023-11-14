@@ -7,11 +7,10 @@ char *input;
 while (1)
 {
 display_prompt();
-char *input = read_input();
+input = read_input();
 execute_command(tokenize_input(input));
 free(input);
 }
 
-return 0;
+return (0);
 }
-
