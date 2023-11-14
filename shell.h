@@ -19,6 +19,8 @@
 void display_prompt(void);
 char *read_input(void);
 void execute_command(char *command);
+char *search_path(char *command);
+char **tokenize_input(char *input);
 
 
 
