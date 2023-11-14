@@ -13,6 +13,8 @@
 #include <string.h>
 
 #define BUFFER_SIZE 1024
+#define MAX_LINE 1024
+#define MAX_ARGS 64
 
 char *read_line(void);
 char **split_line(char *line);
