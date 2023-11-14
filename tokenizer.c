@@ -70,26 +70,3 @@ s[j][m] = 0;
 return (s);
 }
 
-/**
-* main - The main function.
-*
-* Return: 0 on success.
-*/
-
-int main(void)
-{
-char input[] = "This is a sample sentence.";
-char **result = split_string(input, " ");
-
-if (result != NULL)
-{
-int i;
-for (i = 0; result[i] != NULL; i++)
-{
-printf("%s\n", result[i]);
-free(result[i]);
-}
-free(result);
-}
-return (0);
-}
