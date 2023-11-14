@@ -4,7 +4,7 @@
  * execute_command - Execute the entered command
  * @command: The command to execute
  */
-void execute_command(char *command)
+void execute_command(char **command);
 {
 char *path = search_path(args[0]);
 pid_t child_pid;
