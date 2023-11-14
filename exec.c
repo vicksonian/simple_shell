@@ -1,15 +1,11 @@
 #include "shell.h"
-
 /**
-* Execute a command.
-*
-* This function takes an array of strings representing a command and its arguments.
-* It forks a new process to execute the command using execvp and waits for the child
-* process to complete in the parent process.
-*
-* @param args An array of strings representing the command and its arguments.
-* @return 1 on success, or an error code on failure.
-*/
+ * execute_command - Executes a command with the given arguments.
+ * @args: An array of strings representing the command and its arguments.
+ *
+ * Return:
+ * Returns 1 if the command is executed successfully.
+ */
 
 int execute_command(char **args)
 {
