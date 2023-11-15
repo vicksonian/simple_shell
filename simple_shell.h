@@ -19,6 +19,12 @@ char *get_input(InputBuffer *input);
 size_t read_buf(InputBuffer *input);
 char *_getline(InputBuffer *input);
 
+
+void *my_malloc(size_t size);
+void *my_realloc(void *ptr, size_t size);
+void my_free(void *ptr);
+
+
 int execute_command(char *command);
 
 #endif /* SIMPLE_SHELL_H */
