@@ -8,9 +8,17 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-void sigint_handler(int signo);
+typedef struct {
+    char *buffer;
+    size_t size;
+    size_t index;
+} InputBuffer;
+
+void input_buf(InputBuffer *input);
+char *get_input(InputBuffer *input);
+size_t read_buf(InputBuffer *input);
+char *_getline(InputBuffer *input);
+
 int execute_command(char *command);
-char *read_line(void);
 
 #endif /* SIMPLE_SHELL_H */
-
