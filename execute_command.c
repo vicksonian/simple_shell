@@ -1,18 +1,27 @@
 #include "simple_shell.h"
 
 /**
-* execute_command - Executes a command with the given arguments.
-* @args: An array of strings representing the command and its arguments.
-*
-* Return:
-* Returns 1 if the command is executed successfully.
-*/
+ * sigint_handler - Handles the SIGINT signal.
+ * @signo: The signal number.
+ *
+ * Description:
+ * This function handles the SIGINT signal, providing a simple action
+ * (currently doing nothing) when the signal is received.
+ */
 
 void sigint_handler(int signo)
 {
 	(void)signo;
 
 }
+
+/**
+* execute_command - Executes a command with the given arguments.
+* @command: The command to be executed.
+*
+* Return:
+* Returns 1 if the command is executed successfully.
+*/
 
 int execute_command(char *command)
 {
