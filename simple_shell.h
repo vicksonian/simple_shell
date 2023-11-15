@@ -8,7 +8,9 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+void sigint_handler(int signo);
 int execute_command(char *command);
+char *read_line(void);
 
 #endif /* SIMPLE_SHELL_H */
 
