@@ -13,7 +13,7 @@
 void sigint_handler(int signo)
 {
 	(void)signo;
-	write(STDERR_FILENO, "\n#cisfun$ ", 10);
+	
 }
 
 /**
@@ -35,6 +35,16 @@ int execute_command(char *command)
 		exit(EXIT_FAILURE);
 	}
 
+int execute_command(char **args)
+{
+
+if (args[0] != NULL && strcmp(args[0], "exit") == 0)
+       {
+        // If it is, exit the shell
+        printf("Exiting the shell\n");
+        exit(EXIT_SUCCESS);
+       }
+}
 	pid = fork();
 
 	if (pid == 0)
