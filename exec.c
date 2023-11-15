@@ -1,65 +1,85 @@
 #include "simple_shell.h"
 
 /**
-* sigint_handler - Handles the SIGINT signal.
-* @signo: The signal number.
-*
-* Description:
-* This function handles the SIGINT signal, providing a simple action
-* (currently doing nothing) when the signal is received.
-*/
+ * sigint_handler - Handles the SIGINT signal.
+ * @signo: The signal number.
+ *
+ * Description:
+ * This function handles the SIGINT signal, providing a simple action
+ * (currently doing nothing) when the signal is received.
+ */
 void sigint_handler(int signo)
 {
-	(void)signo;
-	write(STDERR_FILENO, "\n#cisfun$ ", 10);
+(void)signo;
+write(STDERR_FILENO, "\n#cisfun$ ", 10);
 }
 
 /**
-* execute_command - Executes a command with the given arguments.
-* @command: The command to be executed.
-*
-* Return:
-* Returns 1 if the command is executed successfully.
-*/
+ * execute_command - Executes a command with the given arguments.
+ * @command: The command to be executed.
+ *
+ * Return:
+ * Returns 1 if the command is executed successfully.
+ */
 int execute_command(char *command)
-{ pid_t pid, wpid;
-	int status;
+{
+pid_t pid, wpid;
+int status;
 
-	if (signal(SIGINT, sigint_handler) == SIG_ERR)
-	{
-		perror("signal");
-		exit(EXIT_FAILURE);
-	}
-	pid = fork();
-	if (pid == 0)
-	{
-		char *token;
-		char *args[MAX_ARGS];
-		int i = 0;
-
-		token = strtok(command, " ");
-		while (token != NULL)
-		{
-			args[i++] = token;
-			token = strtok(NULL, " ");
-		}
-		args[i] = NULL;
-		if (execvp(args[0], args) == -1)
-		{
-			perror("./shell");
-			_exit(EXIT_FAILURE);
-		}
-	}
-	else if (pid < 0)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
-	else
-	{
-		do {
-			wpid = waitpid(pid, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status)); }
-	(void)wpid;
-	return (0);
+if (signal(SIGINT, sigint_handler) == SIG_ERR)
+{
+perror("signal");
+exit(EXIT_FAILURE);
 }
+
+if (strcmp(command, "exit") == 0)
+{
+printf("Exiting the shell\n");
+exit(EXIT_SUCCESS);
+}
+
+pid = fork();
+if (pid == 0)
+{
+char *token;
+char *args[MAX_ARGS];
+int i = 0;
+
+token = strtok(command, " ");
+while (token != NULL)
+{
+args[i++] = token;
+token = strtok(NULL, " ");
+}
+args[i] = NULL;
+
+if (args[0] == NULL || access(args[0], X_OK) == -1)
+{
+fprintf(stderr, "./shell: %s: command not found\n", args[0]);
+_exit(EXIT_FAILURE);
+}
+
+if (execvp(args[0], args) == -1)
+{
+perror("./shell");
+_exit(EXIT_FAILURE);
+}
+}
+else if (pid < 0)
+{
+perror("fork");
+exit(EXIT_FAILURE);
+}
+else
+{
+do
+{
+wpid = waitpid(pid, &status, WUNTRACED);
+} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+}
+
+(void)wpid;
+
+return (1);
+}
+

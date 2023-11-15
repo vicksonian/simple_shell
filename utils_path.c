@@ -1,10 +1,11 @@
 #include "simple_shell.h"
 
 /**
- * Searches for the command in the directories
+ * search_path - Searches for the command in the directories
  * specified by the PATH environment variable.
- * @param command: The command to search for.
- * @return: Full path to the command if found, NULL otherwise.
+ * @command: The command to search for.
+ *
+ * Return: Full path to the command if found, NULL otherwise.
  */
 #include "simple_shell.h"
 
@@ -27,7 +28,7 @@ char *path_copy, *token;
 	while (token != NULL)
 	{
 		char *full_path = malloc(strlen(token) + strlen(command) + 2);
-		
+
 		if (full_path == NULL)
 		{
 			perror("malloc");
