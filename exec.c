@@ -26,40 +26,38 @@ void sigint_handler(int signo)
 
 int execute_command(char *command)
 {
-pid_t pid, wpid;
-int status;
-if (signal(SIGINT, sigint_handler) == SIG_ERR)
-{
-perror("signal");
-exit(EXIT_FAILURE);
-}
-pid = fork();
-if (pid == 0)
-{
-if (strchr(command, '/') == NULL)
-{
-fprintf(stderr, "./shell: No such file or directory\n");
-_exit(EXIT_FAILURE);
-}
-if (execlp(command, command, (char *)NULL) == -1)
-{
-fprintf(stderr, "./shell: No such file or directory\n");
-_exit(EXIT_FAILURE);
-}
-}
-else if (pid < 0)
-{
-perror("fork");
-exit(EXIT_FAILURE);
-}
-else
-{
-do {
-wpid = waitpid(pid, &status, WUNTRACED);
-} while (!WIFEXITED(status) && !WIFSIGNALED(status));
-}
+	pid_t pid, wpid;
+	int status;
 
-(void)wpid;
+	if (signal(SIGINT, sigint_handler) == SIG_ERR)
+	{
+		perror("signal");
+		exit(EXIT_FAILURE);
+	}
 
-return (0);
+	pid = fork();
+
+	if (pid == 0)
+	{
+		if (execlp(command, command, (char *)NULL) == -1)
+		{
+			perror("./shell");
+			_exit(EXIT_FAILURE);
+		}
+	}
+		else if (pid < 0)
+	{
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		do {
+			wpid = waitpid(pid, &status, WUNTRACED);
+		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+	}
+
+	(void)wpid;
+
+	return (0);
 }
