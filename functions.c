@@ -51,7 +51,13 @@ char **split_line(char *line)
 	token = strtok(line, delimiters);
 	while (token != NULL)
 	{
-		tokens[position] = token;
+		tokens[position] = strdup(token);
+		if (!tokens[position])
+		{
+			perror("split_line: strdup error");
+			exit(EXIT_FAILURE);
+		}
+
 		position++;
 
 		if (position >= bufsize)
@@ -69,7 +75,6 @@ char **split_line(char *line)
 	}
 
 	tokens[position] = NULL;
-
 	return (tokens);
 }
 
