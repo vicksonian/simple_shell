@@ -5,7 +5,8 @@
  * @signo: The signal number.
  *
  * Description:
- * This function handles the SIGINT signal, providing a simple action
+ * This function handles the SIGINT
+ * signal, providing a simple action
  * (currently doing nothing) when the signal is received.
  */
 void sigint_handler(int signo)
@@ -15,7 +16,56 @@ write(STDERR_FILENO, "\n#cisfun$ ", 10);
 }
 
 /**
- * execute_command - Executes a command with the given arguments.
+ * handle_exit - Handles the exit built-in command.
+ *
+ * Description:
+ * This function prints a message and
+ * exits the shell successfully.
+ */
+void handle_exit(void)
+{
+printf("Exiting the shell\n");
+exit(EXIT_SUCCESS);
+}
+
+/**
+ * tokenize_command - Tokenizes the command into arguments.
+ * @command: The command to be tokenized.
+ * @args: The array to store the tokenized arguments.
+ */
+void tokenize_command(char *command, char *args[])
+{
+int i = 0;
+char *token = command;
+
+while (*token != '\0' && *token != ' ' && *token != '\n')
+{
+args[i++] = token;
+while (*token != '\0' && *token != ' ' && *token != '\n')
+token++;
+if (*token != '\0')
+*token++ = '\0';
+}
+
+args[i] = NULL;
+}
+
+/**
+ * execute_child_process - Executes the child process.
+ * @args: The array of arguments.
+ */
+void execute_child_process(char *args[])
+{
+if (execvp(args[0], args) == -1)
+{
+perror("./shell");
+_exit(EXIT_FAILURE);
+}
+}
+
+/**
+ * execute_command - Executes a command
+ * with the given arguments.
  * @command: The command to be executed.
  *
  * Return:
@@ -34,36 +84,15 @@ exit(EXIT_FAILURE);
 
 if (strcmp(command, "exit") == 0)
 {
-printf("Exiting the shell\n");
-exit(EXIT_SUCCESS);
+handle_exit();
 }
 
 pid = fork();
 if (pid == 0)
 {
-char *token;
 char *args[MAX_ARGS];
-int i = 0;
-
-token = strtok(command, " ");
-while (token != NULL)
-{
-args[i++] = token;
-token = strtok(NULL, " ");
-}
-args[i] = NULL;
-
-if (args[0] == NULL || access(args[0], X_OK) == -1)
-{
-fprintf(stderr, "./shell: %s: command not found\n", args[0]);
-_exit(EXIT_FAILURE);
-}
-
-if (execvp(args[0], args) == -1)
-{
-perror("./shell");
-_exit(EXIT_FAILURE);
-}
+tokenize_command(command, args);
+execute_child_process(args);
 }
 else if (pid < 0)
 {
@@ -73,11 +102,11 @@ exit(EXIT_FAILURE);
 else
 {
 do
+
 {
 wpid = waitpid(pid, &status, WUNTRACED);
 } while (!WIFEXITED(status) && !WIFSIGNALED(status));
 }
-
 (void)wpid;
 
 return (1);
