@@ -8,12 +8,10 @@
 * This function handles the SIGINT signal, providing a simple action
 * (currently doing nothing) when the signal is received.
 */
-
-
 void sigint_handler(int signo)
 {
 	(void)signo;
-	
+	write(STDERR_FILENO, "\n#cisfun$ ", 10);
 }
 
 /**
@@ -23,10 +21,8 @@ void sigint_handler(int signo)
 * Return:
 * Returns 1 if the command is executed successfully.
 */
-
 int execute_command(char *command)
-{
-	pid_t pid, wpid;
+{ pid_t pid, wpid;
 	int status;
 
 	if (signal(SIGINT, sigint_handler) == SIG_ERR)
@@ -34,28 +30,27 @@ int execute_command(char *command)
 		perror("signal");
 		exit(EXIT_FAILURE);
 	}
-
-int execute_command(char **args)
-{
-
-if (args[0] != NULL && strcmp(args[0], "exit") == 0)
-       {
-        // If it is, exit the shell
-        printf("Exiting the shell\n");
-        exit(EXIT_SUCCESS);
-       }
-}
 	pid = fork();
-
 	if (pid == 0)
 	{
-		if (execlp(command, command, (char *)NULL) == -1)
+		char *token;
+		char *args[MAX_ARGS];
+		int i = 0;
+
+		token = strtok(command, " ");
+		while (token != NULL)
+		{
+			args[i++] = token;
+			token = strtok(NULL, " ");
+		}
+		args[i] = NULL;
+		if (execvp(args[0], args) == -1)
 		{
 			perror("./shell");
 			_exit(EXIT_FAILURE);
 		}
 	}
-		else if (pid < 0)
+	else if (pid < 0)
 	{
 		perror("fork");
 		exit(EXIT_FAILURE);
@@ -64,10 +59,7 @@ if (args[0] != NULL && strcmp(args[0], "exit") == 0)
 	{
 		do {
 			wpid = waitpid(pid, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
-	}
-
+		} while (!WIFEXITED(status) && !WIFSIGNALED(status)); }
 	(void)wpid;
-
 	return (0);
 }

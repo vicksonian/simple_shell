@@ -8,6 +8,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+#define MAX_ARGS 256
+
 typedef struct {
     char *buffer;
     size_t size;
