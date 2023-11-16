@@ -7,7 +7,7 @@
 
 void display_prompt(void)
 {
-        write(STDOUT_FILENO, "$", 9);
+        write(STDOUT_FILENO, "$", 2);
 }
 
 

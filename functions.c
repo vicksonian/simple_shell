@@ -87,8 +87,20 @@ char **split_line(char *line)
  */
 int execute(char **args)
 {
-	pid_t pid, wpid;
+	pid_t pid;
+	pid_t wpid;
 	int status;
+	
+	if (args == NULL || args[0] == NULL)
+	{
+		return (1);
+	}
+
+	if (strcmp(args[0], "exit") == 0)
+	{
+		free(args);
+		exit(EXIT_SUCCESS);
+	}
 
 	pid = fork();
 	if (pid == 0)
@@ -96,9 +108,8 @@ int execute(char **args)
 		if (execvp(args[0], args) == -1)
 		{
 			perror("execute");
+			exit(EXIT_FAILURE);
 		}
-
-		exit(EXIT_FAILURE);
 	}
 	else if (pid < 0)
 	{
