@@ -34,6 +34,13 @@ char *_strncpy(char *dest, const char *src, size_t n);
 char *_strncat(char *dest, const char *src, size_t n);
 char *_strchr(const char *s, int c);
 
+/* Built-in Functions */
+int _myenv(info_t *info);
+char *_getenv(info_t *info, const char *name);
+int _mysetenv(info_t *info);
+int _myunsetenv(info_t *info);
+int populate_env_list(info_t *info);
+int _mycd(info_t *info);
 int _myenv(info_t *info);
 typedef struct list_s list_t;
 
