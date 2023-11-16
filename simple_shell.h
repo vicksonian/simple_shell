@@ -41,7 +41,9 @@ int _mysetenv(info_t *info);
 int _myunsetenv(info_t *info);
 int populate_env_list(info_t *info);
 int _mycd(info_t *info);
+void _setenv(info_t *info, const char *name, const char *value);
 int _myenv(info_t *info);
 typedef struct list_s list_t;
 
+void changeDirectory(info_t *info);
 #endif /* SHELL_H */

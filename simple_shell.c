@@ -1,15 +1,13 @@
 #include "simple_shell.h"
 
-
 /**
-* display_prompt - Displays the shell prompt.
-**/
+ *display_prompt - Displays the shell prompt.
+ **/
 
 void display_prompt(void)
 {
-        write(STDOUT_FILENO, "$", 2);
+	write(STDOUT_FILENO, "$", 2);
 }
-
 
 /**
  *main - Entry point for the simple shell.
