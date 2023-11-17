@@ -1,7 +1,9 @@
 #include "simple_shell.h"
 
-/**
+
+/*
 * _strncpy - Copy at most 'n' characters from 'src' to 'dest'.
+*
 * @dest: The destination buffer.
 * @src: The source string.
 * @n: The maximum number of characters to copy.
@@ -70,7 +72,7 @@ char *_strchr(const char *s, int c)
 	for (; *s != '\0'; ++s)
 	{
 		if (*s == c)
-			return (char *)(s);
+			return (char * (s));
 	}
 
 	return (NULL);

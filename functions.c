@@ -1,26 +1,34 @@
 #include "simple_shell.h"
 
 /**
- *read_line - Read a line of input from the user.
- *
- *Return: The line read from the user.
- */
+*read_line - Read a line of input from the user.
+*
+*Return: The line read from the user.
+*/
+
 char *read_line(void)
 {
 	char *line = NULL;
 	size_t bufsize = 0;
 
+	ssize_t characters_read;
+
 	if (getline(&line, &bufsize, stdin) == -1)
 	{
-		if (feof(stdin))
+		characters_read = _getline(&line, &bufsize);
+
+		if (characters_read <= 0)
 		{
-			free(line);
-			exit(EXIT_SUCCESS);
-		}
-		else
-		{
-			perror("read_line");
-			exit(EXIT_FAILURE);
+			if (feof(stdin))
+			{
+				free(line);
+				exit(EXIT_SUCCESS);
+			}
+			else
+			{
+				perror("read_line");
+				exit(EXIT_FAILURE);
+			}
 		}
 	}
 
@@ -28,12 +36,12 @@ char *read_line(void)
 }
 
 /**
- *split_line - Split a line into tokens.
- *
- *@line: The line to be split.
- *
- *Return: An array of tokens.
- */
+*split_line - Split a line into tokens.
+*
+*@line: The line to be split.
+*
+*Return: An array of tokens.
+*/
 char **split_line(char *line)
 {
 	const char *delimiters = " \t\r\n\a";
@@ -79,18 +87,18 @@ char **split_line(char *line)
 }
 
 /**
- *execute - Execute a command.
- *
- *@args: The command and its arguments.
- *
- *Return: 1 if the shell should continue running, 0 otherwise.
- */
+*execute - Execute a command.
+*
+*@args: The command and its arguments.
+*
+*Return: 1 if the shell should continue running, 0 otherwise.
+*/
 int execute(char **args)
 {
 	pid_t pid;
 	pid_t wpid;
 	int status;
-	
+
 	if (args == NULL || args[0] == NULL)
 	{
 		return (1);
