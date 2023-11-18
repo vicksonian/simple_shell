@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stddef.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
@@ -26,5 +27,6 @@ int shell_cd(char **args);
 int shell_atoi(const char *str);
 char *_getline(size_t *line_index);
 int freemem(void **ptr);
+char *_getline(size_t *line_index);
 
 #endif
