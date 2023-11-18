@@ -1,5 +1,5 @@
-#include "simple_shell.h"
-
+#include "shell.h"
+#define PROMPT "$ "
 /**
  *display_prompt - Displays the shell prompt.
  *Return: returns void.

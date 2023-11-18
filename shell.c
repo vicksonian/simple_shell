@@ -1,25 +1,36 @@
-#include "simple_shell.h"
+#include "shell.h"
 
 /**
  *main - Entry point for the simple shell.
  *
+ *This function represents the entry point for the simple shell program.
+ *It continuously prompts the user for commands, executes them, and
+ *terminates when the user enters "exit"
+ *or the end of file (Ctrl+D) is reached.
+ *
  *Return: Always 0.
  */
 
+#include "shell.h"
+
 int main(void)
 {
-	char *line;
-	char **args;
-	int status;
+	char input[MAX_INPUT_LENGTH];
 
-	do {
-		display_prompt();
-		line = read_line();
-		args = split_line(line);
-		status = execute(args);
-		free(line);
-		free(args);
-	} while (status);
+	while (1)
+	{
+		printf("($) ");
+		if (fgets(input, sizeof(input), stdin) == NULL)
+		{
+			printf("\n");
+			break; /*Exit the loop on EOF (Ctrl+D)*/
+		}
 
-	return (EXIT_SUCCESS);
+		/*Remove newline character from the input*/
+		input[strcspn(input, "\n")] = '\0';
+
+		execute_command(input);
+	}
+
+	return (0);
 }
