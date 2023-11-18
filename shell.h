@@ -22,7 +22,7 @@
 void prompt(void);
 
 void execute_command(char *command);
-
+void shell_exit(void);
 
 
 #endif /*_SHELL_H_*/

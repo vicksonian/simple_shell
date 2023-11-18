@@ -11,25 +11,30 @@
  *Return: Always 0.
  */
 
-#include "shell.h"
-
 int main(void)
 {
 	char input[MAX_INPUT_LENGTH];
 
 	while (1)
 	{
-		printf("($) ");
+		printf("$ ");
 		if (fgets(input, sizeof(input), stdin) == NULL)
 		{
 			printf("\n");
-			break; /*Exit the loop on EOF (Ctrl+D)*/
+			break; /*Exit the loop on EOF (Ctrl+D) */
 		}
 
-		/*Remove newline character from the input*/
+		/*Remove newline character from the input */
 		input[strcspn(input, "\n")] = '\0';
 
-		execute_command(input);
+		if (strcmp(input, "exit") == 0)
+		{
+			shell_exit();
+		}
+		else
+		{
+			execute_command(input);
+		}
 	}
 
 	return (0);
